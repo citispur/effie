@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;My Map App&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body, html { margin: 0; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#map { position: absolute; top: 0; bottom: 0; width: 100%; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="map"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>mapboxgl.accessToken = 'pk.eyJ1IjoiamFja3dhbm5lciIsImEiOiJjbHp0ZWo0ZGgyOHp3Mmtwd2s5enpnYTlqIn0.VQfv9P-q9PnZR2cxxnTpLA';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const map = new mapboxgl.Map({</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container: 'map',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>style: 'mapbox://styles/mapbox/streets-v11',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>center: [-118.24, 34.05], // Default coordinates (Los Angeles)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>zoom: 12</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Optional: Add a geolocate control to the map.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>map.addControl(new mapboxgl.GeolocateControl({</p>
+<p class="p1"><span class="Apple-converted-space">            </span>positionOptions: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>enableHighAccuracy: true</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trackUserLocation: true</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Optional: Add zoom and rotation controls to the map.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>map.addControl(new mapboxgl.NavigationControl());</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let userSelections = {};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('click', function (e) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const coords = e.lngLat;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const neighborhood = prompt('Enter the neighborhood name:');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const density = prompt('Enter desired density:');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (neighborhood &amp;&amp; density) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>userSelections[neighborhood] = density;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Add a marker or heatmap point (this is a simplified example)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new mapboxgl.Marker()</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.setLngLat(coords)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.setPopup(new mapboxgl.Popup().setText(`Neighborhood: ${neighborhood}, Density: ${density}`))</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.addTo(map);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>console.log(userSelections);<span class="Apple-converted-space">  </span>// For debugging</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+</body>
+</html>
